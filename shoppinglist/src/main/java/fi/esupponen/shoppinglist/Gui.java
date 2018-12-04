@@ -13,11 +13,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.text.TextAlignment;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.HPos;
 import javafx.event.*;
+import java.util.Optional;
+
 
 import fi.esupponen.jsonparser.StringUnit;
 import fi.esupponen.jsonparser.JsonFile;
@@ -42,6 +46,43 @@ public class Gui extends Application {
     GridPane itemTable;
 
     JsonFile list;
+
+    private Button addAddButton() {
+        Button add = new Button("ADD TO THE LIST");
+
+        add.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                String itemString = itemTextField.getText();
+                String amountString = amountTextField.getText();
+
+                if (itemString.equals("") || amountString.equals("")) {
+                    Alert noInputAlert = new Alert(Alert.AlertType.WARNING);
+                    noInputAlert.setTitle("Empty input");
+                    noInputAlert.setHeaderText(null);
+                    noInputAlert.setContentText("Item and/or Amount input is empty.");
+                    Optional<ButtonType> result = noInputAlert.showAndWait();
+                } else if (list.alreadyUsed(itemString)) {
+                    Alert noInputAlert = new Alert(Alert.AlertType.WARNING);
+                    noInputAlert.setTitle("Key already used");
+                    noInputAlert.setHeaderText(null);
+                    noInputAlert.setContentText("Item key is already used. Please use another Item.");
+                    Optional<ButtonType> result = noInputAlert.showAndWait();
+                } else {
+                    list.add(itemString, amountString);
+
+                    itemTextField.clear();
+                    amountTextField.clear();
+                    itemTextField.setPromptText("Item to buy");
+                    amountTextField.setPromptText("Amount");
+
+                    updateItemTable();
+                }
+            }
+        });
+
+        return add;
+    }
 
     private Button addResetButton() {
         Button reset = new Button("Reset list");
@@ -94,7 +135,7 @@ public class Gui extends Application {
         gp.add(amountTextField, 1, 1, 3, 1);
 
         // addButton in column 1-2, row 3
-        addButton = new Button("ADD TO THE LIST");
+        addButton = addAddButton();
         gp.add(addButton, 0, 2, 2, 1);
         GridPane.setHalignment(addButton, HPos.CENTER);
 
@@ -127,7 +168,7 @@ public class Gui extends Application {
             ((Region)(itemTable.getChildren().get(i))).setPadding(new Insets(3,3,3,3));
         }
 
-        itemTable.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
+        itemTable.setStyle("-fx-grid-lines-visible: true");
 
         return itemTable;
     }
@@ -149,7 +190,7 @@ public class Gui extends Application {
             ((Region)(itemTable.getChildren().get(i))).setPadding(new Insets(3,3,3,3));
         }
 
-        itemTable.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
+        itemTable.setStyle("-fx-grid-lines-visible: true");
     }
 
     private Button addParseButton() {
