@@ -63,11 +63,11 @@ public class Gui extends Application {
                     noInputAlert.setContentText("Item and/or Amount input is empty.");
                     Optional<ButtonType> result = noInputAlert.showAndWait();
                 } else if (list.alreadyUsed(itemString)) {
-                    Alert noInputAlert = new Alert(Alert.AlertType.WARNING);
-                    noInputAlert.setTitle("Key already used");
-                    noInputAlert.setHeaderText(null);
-                    noInputAlert.setContentText("Item key is already used. Please use another Item.");
-                    Optional<ButtonType> result = noInputAlert.showAndWait();
+                    Alert keyUsedAlert = new Alert(Alert.AlertType.WARNING);
+                    keyUsedAlert.setTitle("Key already used");
+                    keyUsedAlert.setHeaderText(null);
+                    keyUsedAlert.setContentText("Item key is already used. Please use another Item.");
+                    Optional<ButtonType> result = keyUsedAlert.showAndWait();
                 } else {
                     list.add(itemString, amountString);
 
@@ -150,6 +150,8 @@ public class Gui extends Application {
 
     private GridPane addItemTable() {
         itemTable = new GridPane();
+        itemTable.setHgap(5);
+        itemTable.setVgap(5);
         itemTable.setPadding(new Insets(10, 100, 10, 100));
         itemTable.setMinSize(300,0);
 
@@ -167,9 +169,6 @@ public class Gui extends Application {
         for (int i = 0; i < itemTable.getChildren().size(); i++) {
             ((Region)(itemTable.getChildren().get(i))).setPadding(new Insets(3,3,3,3));
         }
-
-        itemTable.setStyle("-fx-grid-lines-visible: true");
-
         return itemTable;
     }
 
@@ -185,17 +184,22 @@ public class Gui extends Application {
             itemTable.add(new Label(list.getUnits().get(i).getKey()), 0, i+1);
             itemTable.add(new Label(((StringUnit)(list.getUnits().get(i))).getValue()), 1, i+1);
         }
-
-        for (int i = 0; i < itemTable.getChildren().size(); i++) {
-            ((Region)(itemTable.getChildren().get(i))).setPadding(new Insets(3,3,3,3));
-        }
-
-        itemTable.setStyle("-fx-grid-lines-visible: true");
     }
 
     private Button addParseButton() {
         parseButton = new Button("PARSE FILE");
-        parseButton.setOnAction((e) -> list.parse());
+        parseButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                list.parse();
+
+                Alert noInputAlert = new Alert(Alert.AlertType.INFORMATION);
+                noInputAlert.setTitle("File created");
+                noInputAlert.setHeaderText(null);
+                noInputAlert.setContentText("File shoppinglist.json created!");
+                Optional<ButtonType> result = noInputAlert.showAndWait();
+            }
+        });
 
         parseButton.setMinHeight(40);
         BorderPane.setMargin(parseButton, new Insets(10,10,10,10));
@@ -221,9 +225,6 @@ public class Gui extends Application {
         Scene scene = new Scene(addLayout(), 640, 480);
 
         list = new JsonFile("shoppinglist");
-        list.add(new StringUnit("omenoita", "viisi"));
-        list.add(new StringUnit("puolukoita", "kilo"));
-        list.add(new StringUnit("jauhoja", "pussi"));
 
         updateItemTable();
 
