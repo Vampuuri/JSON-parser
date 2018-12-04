@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 
 /**
- * @author      Essi Supponen <essi.supponen@cs.tamk.fi>
+ * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
  * @version     2018-1129
  * @since       2018-1120
  */
@@ -141,7 +141,7 @@ public class ArrayUnit<T> implements JsonUnit {
     /**
      * Set a new value.
      ^
-     * @param value     new values as LinkedList
+     * @param values    new values as LinkedList
      */
     public void setValues(LinkedList<T> values) {
         this.values = values;

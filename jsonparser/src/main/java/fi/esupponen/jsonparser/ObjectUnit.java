@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.io.PrintWriter;
 
 /**
- * @author      Essi Supponen <essi.supponen@cs.tamk.fi>
+ * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
  * @version     2018-1128
  * @since       2018-1120
  */
@@ -42,6 +42,7 @@ public class ObjectUnit implements JsonUnit {
     /**
      * Is an unit with certain key already used.
      *
+     * @param   key     key to be found
      * @return  already used
      */
     public boolean alreadyUsed(String key) {
@@ -62,6 +63,8 @@ public class ObjectUnit implements JsonUnit {
      *
      * Checks if unit is instance of JsonFile or if it's key is already used.
      * If neither of them is true, adds unit to the list.
+     *
+     * @param   unit    to be added
      */
     public void add(JsonUnit unit) {
         if (unit instanceof JsonFile) {
@@ -128,7 +131,7 @@ public class ObjectUnit implements JsonUnit {
     /**
      * Sets a new value.
      ^
-     * @param value     new value
+     * @param values    new value
      */
     public void setValue(LinkedList<JsonUnit> values) {
         this.values = new LinkedList<JsonUnit>();

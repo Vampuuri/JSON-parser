@@ -3,7 +3,7 @@ package fi.esupponen.jsonparser;
 import java.io.PrintWriter;
 
 /**
- * @author      Essi Supponen <essi.supponen@cs.tamk.fi>
+ * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
  * @version     2018-1129
  * @since       2018-1120
  */

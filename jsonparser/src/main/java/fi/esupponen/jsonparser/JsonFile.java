@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.io.PrintWriter;
 
 /**
- * @author      Essi Supponen <essi.supponen@cs.tamk.fi>
- * @version     2018-1128
+ * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
+ * @version     2018-1204
  * @since       2018-1120
  */
 public class JsonFile implements JsonUnit {
@@ -33,7 +33,8 @@ public class JsonFile implements JsonUnit {
     /**
      * Is an unit with certain key already used.
      *
-     * @return  already used
+     * @param   key     key to find
+     * @return          already used
      */
     public boolean alreadyUsed(String key) {
         boolean alreadyUsed = false;
@@ -304,6 +305,9 @@ public class JsonFile implements JsonUnit {
         writer.print(leadingSpaces + "}");
     }
 
+    /**
+     * Clears units-list.
+     */
     public void clear() {
         units.clear();
     }
@@ -317,10 +321,22 @@ public class JsonFile implements JsonUnit {
         return name;
     }
 
+    /**
+     * Returns null instead of key.
+     *
+     * Returns null because JsonFile is not supposed to be a JsonUnit alone.
+     *
+     * @return  always null
+     */
     public String getKey() {
         return null;
     }
 
+    /**
+     * Returns units in a LinkedList.
+     *
+     * @return  units
+     */
     public LinkedList<JsonUnit> getUnits() {
         return units;
     }

@@ -28,25 +28,66 @@ import fi.esupponen.jsonparser.JsonFile;
 
 
 /**
- * @author      Essi Supponen <essi.supponen@cs.tamk.fi>
- * @version     2018-1201
+ * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
+ * @version     2018-1204
  * @since       2018-1201
  */
 public class Gui extends Application {
+
+    /**
+     * Button to parse the list into json-file.
+     */
     Button parseButton;
+
+    /**
+     * Button to add an item to the list.
+     */
     Button addButton;
+
+    /**
+     * Button to reset the list.
+     */
     Button resetButton;
 
+    /**
+     * TextField for item input.
+     */
     TextField itemTextField;
+
+    /**
+     * TextField for amount input.
+     */
     TextField amountTextField;
 
+    /**
+     * Label for item.
+     */
     Label itemLabel;
+
+    /**
+     * Label for amount.
+     */
     Label amountLabel;
 
+    /**
+     * Table for all items in list.
+     */
     GridPane itemTable;
 
+    /**
+     * JsonFile to save all the information.
+     */
     JsonFile list;
 
+    /**
+     * Generates and returns button for adding an item to the list.
+     *
+     * Generates a new button. Adds event for button push. Reads given inputs
+     * and adds it to the list. If neither of inputs are missing, shows an
+     * alert. If the given key (item) is already in list, shows an alert.
+     *
+     * @return  addButton
+     */
     private Button addAddButton() {
         Button add = new Button("ADD TO THE LIST");
 
@@ -57,18 +98,22 @@ public class Gui extends Application {
                 String amountString = amountTextField.getText();
 
                 if (itemString.equals("") || amountString.equals("")) {
+                    // If either of the inputs are empty, shows an alert.
                     Alert noInputAlert = new Alert(Alert.AlertType.WARNING);
                     noInputAlert.setTitle("Empty input");
                     noInputAlert.setHeaderText(null);
                     noInputAlert.setContentText("Item and/or Amount input is empty.");
                     Optional<ButtonType> result = noInputAlert.showAndWait();
                 } else if (list.alreadyUsed(itemString)) {
+                    // If key is already used, shows and alert.
                     Alert keyUsedAlert = new Alert(Alert.AlertType.WARNING);
                     keyUsedAlert.setTitle("Key already used");
                     keyUsedAlert.setHeaderText(null);
                     keyUsedAlert.setContentText("Item key is already used. Please use another Item.");
                     Optional<ButtonType> result = keyUsedAlert.showAndWait();
                 } else {
+                    // If nothing is wrong, adds the item to the list and
+                    // clears the TextFields.
                     list.add(itemString, amountString);
 
                     itemTextField.clear();
@@ -84,6 +129,14 @@ public class Gui extends Application {
         return add;
     }
 
+    /**
+     * Generates and returns button for resetting the list.
+     * 
+     * Generates a button. Adds ation to the button push. Clears list and
+     * updates the itemTable.
+     *
+     * @return  resetButton
+     */
     private Button addResetButton() {
         Button reset = new Button("Reset list");
 
@@ -98,6 +151,15 @@ public class Gui extends Application {
         return reset;
     }
 
+    /**
+     * Generates and returns the whole top of the border layout.
+     *
+     * Creates a gridpane. Adds all the needed features to make the layout look
+     * (mostly) nice. Adds itemLabel, itemTextField, amountLabel,
+     * amountTextField, addButton and resetButton.
+     *
+     * @return  top part to the border layout
+     */
     private GridPane addTop() {
         GridPane gp = new GridPane();
         gp.setHgap(5);
@@ -148,6 +210,14 @@ public class Gui extends Application {
         return gp;
     }
 
+    /**
+     * Generates and returns itemTable.
+     *
+     * Creates a GridPane. Adds needed features to make it look (mostly) nice.
+     * Adds ITEM and AMOUNT labels.
+     *
+     * @return  itemTable
+     */
     private GridPane addItemTable() {
         itemTable = new GridPane();
         itemTable.setHgap(5);
@@ -166,12 +236,15 @@ public class Gui extends Application {
         GridPane.setHalignment(itemTable.getChildren().get(0), HPos.CENTER);
         GridPane.setHalignment(itemTable.getChildren().get(1), HPos.CENTER);
 
-        for (int i = 0; i < itemTable.getChildren().size(); i++) {
-            ((Region)(itemTable.getChildren().get(i))).setPadding(new Insets(3,3,3,3));
-        }
         return itemTable;
     }
 
+    /**
+     * Updates itemTable.
+     *
+     * Clears the itemTable. Adds all the labels and units from list to the
+     * table.
+     */
     public void updateItemTable() {
         itemTable.getChildren().clear();
 
@@ -186,6 +259,14 @@ public class Gui extends Application {
         }
     }
 
+    /**
+     * Generates and returns parseButton.
+     *
+     * Creates a new button. When button is pressed parses the file. Shows an
+     * alert window to inform the user.
+     *
+     * @return  parseButton
+     */
     private Button addParseButton() {
         parseButton = new Button("PARSE FILE");
         parseButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -208,6 +289,13 @@ public class Gui extends Application {
         return parseButton;
     }
 
+    /**
+     * Generates and returns the layout.
+     *
+     * Uses BorderPane. Adds right items to the right places.
+     *
+     * @return  layout
+     */
     private BorderPane addLayout() {
         BorderPane bp = new BorderPane();
 
@@ -220,6 +308,9 @@ public class Gui extends Application {
         return bp;
     }
 
+    /**
+     * Generates and shows the window.
+     */
     @Override
     public void start(Stage stage) {
         Scene scene = new Scene(addLayout(), 640, 480);
@@ -233,6 +324,9 @@ public class Gui extends Application {
         stage.show();
     }
 
+    /**
+     * Launces the application.
+     */
     public static void main(String args[]){
         launch(args);
     }
