@@ -137,6 +137,7 @@ public class Gui extends Application {
 
     private Button addParseButton() {
         parseButton = new Button("PARSE FILE");
+        parseButton.setOnAction((e) -> list.parse());
 
         parseButton.setMinHeight(40);
         BorderPane.setMargin(parseButton, new Insets(10,10,10,10));
