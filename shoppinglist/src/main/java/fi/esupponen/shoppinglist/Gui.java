@@ -17,6 +17,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.HPos;
+import javafx.event.*;
 
 import fi.esupponen.jsonparser.StringUnit;
 import fi.esupponen.jsonparser.JsonFile;
@@ -41,6 +42,20 @@ public class Gui extends Application {
     GridPane itemTable;
 
     JsonFile list;
+
+    private Button addResetButton() {
+        Button reset = new Button("Reset list");
+
+        reset.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                list.clear();
+                updateItemTable();
+            }
+        });
+
+        return reset;
+    }
 
     private GridPane addTop() {
         GridPane gp = new GridPane();
@@ -84,7 +99,7 @@ public class Gui extends Application {
         GridPane.setHalignment(addButton, HPos.CENTER);
 
         // resetButton in column 3-4, row 3
-        resetButton = new Button("Reset list");
+        resetButton = addResetButton();
         resetButton.setAlignment(Pos.CENTER);
         gp.add(resetButton, 2, 2, 2, 1);
         GridPane.setHalignment(resetButton, HPos.CENTER);
@@ -133,6 +148,8 @@ public class Gui extends Application {
         for (int i = 0; i < itemTable.getChildren().size(); i++) {
             ((Region)(itemTable.getChildren().get(i))).setPadding(new Insets(3,3,3,3));
         }
+
+        itemTable.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
     }
 
     private Button addParseButton() {

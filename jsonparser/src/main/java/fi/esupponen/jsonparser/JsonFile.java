@@ -304,6 +304,10 @@ public class JsonFile implements JsonUnit {
         writer.print(leadingSpaces + "}");
     }
 
+    public void clear() {
+        units.clear();
+    }
+
     /**
      * Returns the name of the JsonFile.
      *
