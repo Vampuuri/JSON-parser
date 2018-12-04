@@ -1,0 +1,7 @@
+fi\esupponen\jsonparser\JsonFile.class
+fi\esupponen\jsonparser\ObjectUnit.class
+fi\esupponen\jsonparser\NumberUnit.class
+fi\esupponen\jsonparser\JsonUnit.class
+fi\esupponen\jsonparser\ArrayUnit.class
+fi\esupponen\jsonparser\StringUnit.class
+fi\esupponen\jsonparser\BooleanUnit.class
