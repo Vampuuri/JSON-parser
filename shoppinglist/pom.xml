@@ -1,17 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!-- important: change this artifactID to gui or something! 
-    This is pom for the graphic part of the project. -->
     <artifactId>shoppinglist</artifactId>
-    <!-- jar-packaging here so we get out something like game-1.0.jar -->
     <packaging>jar</packaging>
 
-    <!-- Parent module's info -->
     <parent>
         <groupId>fi.esupponen</groupId>
         <artifactId>project</artifactId>
-        <version>2.0</version>
+        <version>3.0</version>
     </parent>
 
     <properties>
@@ -19,7 +15,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     
-<!-- Build info for the graphic part! Important to change the mainClass. -->
     <build>
         <plugins>
             <plugin>
@@ -27,17 +22,16 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
                     <skip>false</skip>
-                    <mainClass>fi.esupponen.shoppinglist.Gui</mainClass> <!-- NOTE: CHANGE THIS! -->
+                    <mainClass>fi.esupponen.shoppinglist.Gui</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     
-<!-- Adding dependency to the gameEngine(=jsonparser in your case) -->
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jsonparser</artifactId>  <!-- NOTE:CHANGE ONLY THIS! -->
+            <artifactId>jsonparser</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

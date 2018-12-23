@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 
 /**
  * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
- * @version     2018-1129
+ * @version     2018-1217
  * @since       2018-1120
  */
 public class StringUnit implements JsonUnit {
@@ -18,6 +18,16 @@ public class StringUnit implements JsonUnit {
      * The value of the unit.
      */
     String value;
+
+    /**
+     * Constructs an unit using given key and a value of null.
+     *
+     * @param   key     key of the unit
+     */
+    public StringUnit(String key) {
+        this.key = key;
+        this.value = null;
+    }
 
     /**
      * Constructs an unit using given key and value.
@@ -55,8 +65,17 @@ public class StringUnit implements JsonUnit {
      *
      * @return  string representation of object
      */
+    @Override
     public String toString() {
-        return key + " : " + value;
+        String str = "\"" + key + "\": ";
+
+        if (value == null) {
+            str += "null";
+        } else {
+            str += "\"" + value + "\"";
+        }
+
+        return str;
     }
 
     /**

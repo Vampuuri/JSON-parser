@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 
 /**
  * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
- * @version     2018-1129
+ * @version     2018-1217
  * @since       2018-1120
  */
 public class ArrayUnit<T> implements JsonUnit {
@@ -112,6 +112,15 @@ public class ArrayUnit<T> implements JsonUnit {
     }
 
     /**
+     * Adds given unit to the values.
+     *
+     * @param   unit    new unit
+     */
+    public void add(T unit) {
+        values.add(unit);
+    }
+
+    /**
      * Returns the key of the unit.
      *
      * @return  key
@@ -145,5 +154,61 @@ public class ArrayUnit<T> implements JsonUnit {
      */
     public void setValues(LinkedList<T> values) {
         this.values = values;
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return  string representation of object
+     */
+    @Override
+    public String toString() {
+        String str = "\"" + key + "\": ";
+
+        if (values == null) {
+            str += null;
+        } else {
+            str += "[";
+
+            if (values.size() == 0) {
+                // Do nothing.
+            } else if (values.get(0) instanceof String) {
+                for (int i = 0; i < values.size(); i++) {
+                    str += "\"" + values.get(i) + "\"";
+
+                    if (i != values.size()-1) {
+                        str += ", ";
+                    }
+                }
+            } else if (values.get(0) instanceof Double) {
+                DecimalFormat intFormat = new DecimalFormat("#.#");
+
+                for (int i = 0; i < values.size(); i++) {
+                    Double value = (Double) (values.get(i));
+
+                    if (value.doubleValue() - (int)value.doubleValue() != 0) {
+                        str += value;
+                    } else {
+                        str += intFormat.format(value.doubleValue());
+                    }
+
+                    if (i != values.size()-1) {
+                        str += ", ";
+                    }
+                }
+            } else {
+                for (int i = 0; i < values.size(); i++) {
+                    str += values.get(i).toString();
+
+                    if (i != values.size()-1) {
+                        str += ", ";
+                    }
+                }
+            }
+
+            str += "]";
+        }
+
+        return str;
     }
 }

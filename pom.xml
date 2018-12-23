@@ -3,21 +3,16 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
     xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <!-- Below is the parent pom's (=this) info. 
-    These are referenced in the other modules' poms. -->
     <groupId>fi.esupponen</groupId>
     <artifactId>project</artifactId>
-    <version>2.0</version>
-    <!-- Important the packaging on this pom is "pom": do not change this! -->
+    <version>3.0</version>
     <packaging>pom</packaging>
 
-    <!-- List of modules, these names are the same as the artifactID in the module poms. -->
     <modules>
         <module>jsonparser</module>
         <module>shoppinglist</module>
     </modules>
     
-<!-- Some building code below, do not touch lol (main class is defined in other pom) -->
     <build>
         <pluginManagement>
             <plugins>
@@ -32,24 +27,5 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 </project>

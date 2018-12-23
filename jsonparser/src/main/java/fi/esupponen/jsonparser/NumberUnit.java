@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 
 /**
  * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
- * @version     2018-1128
+ * @version     2018-1217
  * @since       2018-1120
  */
 public class NumberUnit implements JsonUnit {
@@ -112,5 +112,23 @@ public class NumberUnit implements JsonUnit {
      */
     public void setValue(int value) {
         this.value = (double)value;
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return  string representation of object
+     */
+    @Override
+    public String toString() {
+        String str = "\"" + key + "\": ";
+
+        if (value - (int)value != 0) {
+            str += value;
+        } else {
+            str += intFormat.format(value);
+        }
+
+        return str;
     }
 }

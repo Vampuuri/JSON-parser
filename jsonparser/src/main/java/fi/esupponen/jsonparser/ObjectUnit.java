@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 
 /**
  * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
- * @version     2018-1128
+ * @version     2018-1217
  * @since       2018-1120
  */
 public class ObjectUnit implements JsonUnit {
@@ -28,13 +28,17 @@ public class ObjectUnit implements JsonUnit {
      */
     public ObjectUnit(String key, LinkedList<JsonUnit> values) {
         this.key = key;
-        this.values = new LinkedList<JsonUnit>();
+        this.values = new LinkedList<>();
 
-        for (JsonUnit value : values) {
-            if (alreadyUsed(value.getKey())) {
-                throw new RuntimeException("Can't set a list with multiple same keys.");
-            } else {
-                this.values.add(value);
+        if (values == null) {
+            this.values = null;
+        } else  {
+            for (JsonUnit value : values) {
+                if (alreadyUsed(value.getKey())) {
+                    throw new RuntimeException("Can't set a list with multiple same keys.");
+                } else {
+                    this.values.add(value);
+                }
             }
         }
     }
@@ -67,6 +71,10 @@ public class ObjectUnit implements JsonUnit {
      * @param   unit    to be added
      */
     public void add(JsonUnit unit) {
+        if (values == null) {
+            values = new LinkedList<>();
+        }
+
         if (unit instanceof JsonFile) {
             throw new RuntimeException("JsonFiles can be added to ObjectUnit only in ArrayUnit.");
         } else {
@@ -88,17 +96,22 @@ public class ObjectUnit implements JsonUnit {
      * @param   writer          json-file   
      */
     public void jsonPrint(String leadingSpaces, PrintWriter writer) {
-        writer.println(leadingSpaces + "\"" + key + "\": {");
+        writer.print(leadingSpaces + "\"" + key + "\": ");
 
-        for (int i = 0; i < values.size(); i++) {
-            values.get(i).jsonPrint(leadingSpaces + "  ", writer);
+        if (values == null) {
+            writer.print("null");
+        } else {
+            writer.println("{");
+            for (int i = 0; i < values.size(); i++) {
+                values.get(i).jsonPrint(leadingSpaces + "  ", writer);
 
-            if (i < values.size() - 1) {
-                writer.println(",");
+                if (i < values.size() - 1) {
+                    writer.println(",");
+                }
             }
+            writer.println();
+            writer.print(leadingSpaces + "}");
         }
-        writer.println();
-        writer.print(leadingSpaces + "}");
     }
     
     /**
@@ -134,14 +147,44 @@ public class ObjectUnit implements JsonUnit {
      * @param values    new value
      */
     public void setValue(LinkedList<JsonUnit> values) {
-        this.values = new LinkedList<JsonUnit>();
+        if (values == null) {
+            this.values = null;
+        } else {
+            this.values = new LinkedList<JsonUnit>();
 
-        for (JsonUnit value : values) {
-            if (alreadyUsed(value.getKey())) {
-                throw new RuntimeException("Can't set a list with multiple same keys.");
-            } else {
-                this.values.add(value);
+            for (JsonUnit value : values) {
+                if (alreadyUsed(value.getKey())) {
+                    throw new RuntimeException("Can't set a list with multiple same keys.");
+                } else {
+                    this.values.add(value);
+                }
             }
         }
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return  string representation of object
+     */
+    @Override
+    public String toString() {
+        String str = "\"" + key + "\": ";
+
+        if (values == null) {
+            str += "null";
+        } else {
+            str += "{";
+            for (int i = 0; i < values.size(); i++) {
+                str += values.get(i).toString();
+
+                if (i < values.size() - 1) {
+                    str += ", ";
+                }
+            }
+            str += "}";
+        }
+
+        return str;
     }
 }

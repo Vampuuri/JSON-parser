@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 
 /**
  * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
- * @version     2018-1204
+ * @version     2018-1217
  * @since       2018-1120
  */
 public class JsonFile implements JsonUnit {
@@ -348,5 +348,27 @@ public class JsonFile implements JsonUnit {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return  string representation of object
+     */
+    @Override
+    public String toString() {
+        String str = "{";
+
+        for (int i = 0; i < units.size(); i++) {
+            str += units.get(i).toString();
+
+            if (i != units.size() - 1) {
+                str += ", ";
+            }
+        }
+
+        str += "}";
+
+        return str;
     }
 }

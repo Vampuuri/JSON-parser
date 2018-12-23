@@ -3,10 +3,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import fi.esupponen.jsonparser.*;
 
-public class JsonParserTest {
+public class JsonFileTest {
     JsonFile testFile;
 
-    public JsonParserTest() {
+    public JsonFileTest() {
         testFile = new JsonFile("test");
 
         testFile.add("boolean", true);

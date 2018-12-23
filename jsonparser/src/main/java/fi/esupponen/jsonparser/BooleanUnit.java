@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 
 /**
  * @author      Essi Supponen [essi.supponen@cs.tamk.fi]
- * @version     2018-1128
+ * @version     2018-1217
  * @since       2018-1120
  */
 public class BooleanUnit implements JsonUnit {
@@ -18,6 +18,16 @@ public class BooleanUnit implements JsonUnit {
      * The value of the unit.
      */
     Boolean value;
+
+    /**
+     * Constructs an unit using given key and a value of null.
+     *
+     * @param   key     key of the unit
+     */
+    public BooleanUnit(String key) {
+        this.key = key;
+        this.value = null;
+    }
 
     /**
      * Constructs an unit using given key and value.
@@ -79,10 +89,20 @@ public class BooleanUnit implements JsonUnit {
 
     /**
      * Sets a new value.
-     ^
+     *
      * @param value     new value
      */
     public void setValue(boolean value) {
         this.value = value;
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return  string representation of object
+     */
+    @Override
+    public String toString() {
+        return "\"" + key + "\": " + value;
     }
 }
